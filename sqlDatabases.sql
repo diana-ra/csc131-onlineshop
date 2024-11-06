@@ -36,3 +36,4 @@ CREATE TABLE ShippingInfo (
     shippingID INTEGER PRIMARY KEY,
     shippingType STRING,
     shippingCost INT
+);
