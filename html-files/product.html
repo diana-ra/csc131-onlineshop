@@ -1,0 +1,510 @@
+<!-- product.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Essential Baggy Sweatpant</title>
+    <style>
+         /* Basic Styles */
+         body {
+            font-family: Garamond, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            text-align: center;
+            padding: 10px;
+            background-color: #f9f9f9;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .navbar a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        /* Image Gallery */
+        .image-gallery {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .thumbnail img, .main-image img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .main-image img {
+            max-width: 100%;
+        }
+        /* Product Info */
+        .product-info {
+            flex: 2;
+            padding-left: 20px;
+        }
+        .top-rated {
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            font-size: 12px;
+            width: fit-content;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        .product-info h1 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+        .rating {
+            color: #f4b400;
+            font-size: 18px;
+            margin: 5px 0;
+        }
+        .product-options {
+            margin: 15px 0;
+        }
+        .product-options span {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .color-options, .size-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .color-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .size-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            width: 40px;
+            height: 40px; /* Ensure square size buttons */
+            box-sizing: border-box; /* Include padding and border in width/height */
+        }
+        /* Hover Effect */
+        .size-button:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Active (selected) state */
+        .size-button.selected {
+            background-color: #333;
+            color: #fff;
+            border: 2px solid #333;
+        }
+        /* Add to Cart Section */
+        .add-to-cart-section {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .quantity-select {
+            padding: 5px;
+            font-size: 14px;
+            width: 50px;
+        }
+        .add-to-cart {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        .additional-info {
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+            margin-top: 20px;
+        }
+        .info-section {
+            margin: 10px 0;
+            font-size: 16px;
+            cursor: pointer;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            
+        }
+         /* Color Options Styling */
+        .color-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .color-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .color-circle:hover {
+            transform: scale(1.1);
+        }
+        .color-circle.selected {
+            border: 3px solid #333;
+        }
+        #color-name {
+            font-weight: bold;
+        }
+
+        .search-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+        }
+        .search-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #333;
+            transition: color 0.3s;
+        }
+        .search-icon:hover svg {
+            color: #555;
+        }
+
+        .search-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .search-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            width: 70%;
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-modal-header h2 {
+            margin: 0;
+        }
+
+        .close-modal {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-section {
+            margin: 20px 0;
+        }
+
+        .search-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .tag:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+    </style>
+
+    <script>
+        function validateForm() {
+            var productID = document.getElementById("productID").value;
+            var productType = document.getElementById("productType").value;
+            var productName = document.getElementById("productName").value;
+            var quantity = document.getElementById("quantity").value;
+            var productSize = document.getElementById("productSize").value;
+
+            if (productID == "" || productType == "" || productName == "" || quantity == "" || productSize == "") {
+                alert("All fields must be filled out");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="navbar">
+        <!-- Home link: Returns to the Home page (index.html) -->
+        <a href="home.html">Home</a>
+        
+        <!-- Men link: Navigates to the Men's Clothing page (men.html) -->
+        <a href="home.html">Products</a>
+        
+        <!-- Women link: Navigates to the Women's Clothing page (women.html) -->
+        <a href="home.html">About Us</a>
+        
+        <!-- Sale link: Placeholder for future functionality -->
+        <a href="#">Contact</a>
+        
+    </div>
+
+    <button class="search-icon" onclick ="openSearchModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </button>
+
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-content">
+            <!-- Modal Header -->
+            <div class="search-modal-header">
+                <h2>Search</h2>
+                <div class="close-modal" onclick="closeSearchModal()">&times;</div>
+            </div>
+
+            <!-- Search Input -->
+            <div class="search-box">
+                <input type="text" placeholder="Search">
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="search-section">
+                <h3>Recent Searches</h3>
+                <div class="search-tags">
+                    <div class="tag">Zip Up Hoodies Men</div>
+                    <div class="tag">Zip Up Hoodies (Boys)</div>
+                    <div class="tag">Clear All</div>
+                </div>
+            </div>
+
+            <!-- Popular Searches -->
+            <div class="search-section">
+                <h3>Popular Searches</h3>
+                <div class="search-tags">
+                    <div class="tag">NFL</div>
+                    <div class="tag">Racing</div>
+                    <div class="tag">Camo</div>
+                    <div class="tag">Vests</div>
+                    <div class="tag">YPB Active</div>
+                </div>
+            </div>
+
+            <!-- Helpful Links -->
+            <div class="search-section">
+                <h3>Helpful Links</h3>
+                <div class="search-tags">
+                    <div class="tag">Online Returns</div>
+                    <div class="tag">Track My Order</div>
+                    <div class="tag">My Info</div>
+                    <div class="tag">Purchase History</div>
+                    <div class="tag">Unsubscribe</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to open the search modal
+        function openSearchModal() {
+            document.getElementById('searchModal').style.display = 'block';
+        }
+
+        // Function to close the search modal
+        function closeSearchModal() {
+            document.getElementById('searchModal').style.display = 'none';
+        }
+    </script>
+
+    <!-- Product Detail Container -->
+    <div class="container">
+        <!-- Image Gallery -->
+        <div class="image-gallery">
+            
+            <div class="main-image">
+                <img src="C:\Users\nimal\CSC 131 UI\UI\products\DALL·E 2024-11-06 19.49.27 - A close-up of a casual white t-shirt hanging on a wooden hanger, simple design, short sleeves, displayed on a plain background. Isolated with no backg.jpg" alt="Main Sweatpant Image">
+            </div>
+        </div>
+
+        <!-- Product Info Section -->
+        <div class="product-info">
+            <div class="top-rated">TOP RATED</div>
+            <h1>White T-Shirt</h1>
+            <div class="price">$25</div>
+            <div class="rating">★★★★☆ <span>(80 reviews)</span></div>
+
+
+            <!-- Product Options -->
+            <div class="product-options">
+                <span>Color: <span id="color-name">Light Gray Camo</span></span>
+            <div class="color-options">
+                <div class="color-circle" style="background-color: #4d4d4d;" data-color ="Dark Gray"></div>
+                <div class="color-circle" style="background-color: #2d5e4f;" data-color="Forest Green"></div>
+                <div class="color-circle" style="background-color: #d3d3d3;" data-color="Light Gray"></div>
+                <div class="color-circle" style="background-color: #ffffff;" data-color="White"></div>
+            
+                </div>
+
+                <span>Size</span>
+                <div class="size-options">
+                    <div class="size-button">XS</div>
+                    <div class="size-button">S</div>
+                    <div class="size-button active">M</div>
+                    <div class="size-button">L</div>
+                    <div class="size-button">XL</div>
+                </div>
+            </div>
+
+            <script>
+                // JavaScript to handle the selected state
+                const sizeButtons = document.querySelectorAll('.size-button');
+        
+                sizeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        // Remove 'selected' class from all buttons
+                        sizeButtons.forEach(btn => btn.classList.remove('selected'));
+                        
+                        // Add 'selected' class to the clicked button
+                        button.classList.add('selected');
+                    });
+                });
+
+                // JavaScript for Color Selection
+                const colorCircles = document.querySelectorAll('.color-circle');
+                const colorName = document.getElementById('color-name');
+
+                colorCircles.forEach(circle => {
+                circle.addEventListener('click', () => {
+                // Remove 'selected' class from all color circles
+                colorCircles.forEach(circ => circ.classList.remove('selected'));
+                
+                // Add 'selected' class to the clicked circle
+                circle.classList.add('selected');
+                
+                // Update the color name text
+                colorName.textContent = circle.getAttribute('data-color');
+                colorName.style.color = circle.style.backgroundColor;
+                });
+            });
+            </script>
+
+            <!-- Add to Cart Section -->
+            <div class="add-to-cart-section">
+                <select class="quantity-select">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+                <a href="checkout.html" class="add-to-cart-section">
+                <button class="add-to-cart">Add To Cart</button>
+                </a>
+            </div>
+
+            <!-- Additional Information Section -->
+            <div class="additional-info">
+                <div class="info-section">
+                    <span>Size & Fit</span> <span>+</span>
+                </div>
+                <div class="info-section">
+                    <span>Details & Material</span> <span>+</span>
+                </div>
+                <div class="info-section">
+                    <span>Shipping & Returns</span> <span>+</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product FORM (USER INPUT) -->
+    <form action="addProduct" method="post" onsubmit="return validateForm()">
+        <label for="productID">Product ID:</label>
+        <input type="text" id="productID" name="productID" required><br><br>
+
+        <label for="productType">Product Type:</label>
+        <input type="text" id="productType" name="productType" required><br><br>
+
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" required><br><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required><br><br>
+
+        <label for="productSize">Product Size:</label>
+        <input type="text" id="productSize" name="productSize" required><br><br>
+
+        <button type="submit">Add Product</button>
+    </form>
+
+</body>
+</html>

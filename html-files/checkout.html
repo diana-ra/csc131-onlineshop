@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+    <style>
+        body {
+            font-family: Garamond, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* Navbar */
+        .navbar {
+            text-align: center;
+            padding: 10px;
+            background-color: #f9f9f9;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .navbar a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Section Styling */
+        section {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-container input {
+            margin-right: 10px;
+        }
+
+        .button {
+            background-color: #2b2d2e;
+            color: #f8f8f8;
+            padding: 5px 20px;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #bdb5b5;
+        }
+
+        .bag-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .order-total {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .promotions {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .payment-methods img {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #f0f0f0;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div class="navbar">
+        <!-- Home link: Returns to the Home page (index.html) -->
+        <a href="../../Downloads/CSC131/home.html">Home</a>
+        
+        <!-- Men link: Navigates to the Men's Clothing page (men.html) -->
+        <a href="../../Downloads/CSC131/home.html">Products</a>
+        
+        <!-- Women link: Navigates to the Women's Clothing page (women.html) -->
+        <a href="../../Downloads/CSC131/home.html">About Us</a>
+        
+        <!-- Sale link: Placeholder for future functionality -->
+        <a href="#">Contact</a>
+        
+    </div>
+    
+    <!-- Section 1: Login -->
+    <section>
+        <h2>Checkout</h2>
+        <p>Sign in with your password and get all the rewards!</p>
+        <form>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email" value="nimalex4@gmail.com">
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password">
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="keep-signed-in">
+                <label for="keep-signed-in">Keep Me Signed In</label>
+            </div>
+
+            <a href="#" style="font-size: 14px; color: #0056b3;">Forgot Password?</a>
+
+            <button class="button" type="submit">Sign In</button>
+            <button class="button" type="button" style="background-color: #ddd; color: #333;">Continue as Guest</button>
+        </form>
+    </section>
+
+    <!-- Section 2: Your Bag -->
+    <section>
+        <h2>Your Bag</h2>
+        <div class="bag-summary">
+            <img src="C:\Users\nimal\OneDrive\TESTING\TESTING PROTO\products\DALL·E 2024-11-06 19.49.27 - A close-up of a casual white t-shirt hanging on a wooden hanger, simple design, short sleeves, displayed on a plain background. Isolated with no backg.jpg" alt="Essential Popover Hoodie" width ="150" height = "auto">
+            <div>
+                
+
+            </div>
+        </div>
+        <div class="promotions">
+            <p>Promotions: <a href="#">Add Promotion Code</a></p>
+        </div>
+        <div>
+            <p>Items (): </p>
+            <p>Shipping & Handling: </p>
+            <p>Estimated Tax: </p>
+            <p class="order-total">Order Total: </p>
+        </div>
+    </section>
+
+    <!-- Section 3: Shipping Information -->
+    <section>
+        <h2>Shipping Information</h2>
+        <form>
+            <h3>Shipping Speed</h3>
+            <label>
+                <input type="radio" name="shipping" value="standard" checked> Standard - $7.00
+            </label>
+            <label>
+                <input type="radio" name="shipping" value="two-day"> Two Day - $15.00
+            </label>
+            <label>
+                <input type="radio" name="shipping" value="next-day"> Next Day - $22.00
+            </label>
+
+            <h3>Shipping Address</h3>
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" placeholder="Enter your first name">
+
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" placeholder="Enter your last name">
+
+            <label for="address">Address</label>
+            <input type="text" id="address" placeholder="Enter your address">
+        </form>
+    </section>
+
+    <!-- Section 4: Payment Options -->
+    <section>
+        <h2>Secure Payment</h2>
+        <div class="payment-methods">
+            <img src="https://via.placeholder.com/50" alt="Credit/Debit Card">
+            <img src="https://via.placeholder.com/50" alt="Google Pay">
+            <img src="https://via.placeholder.com/50" alt="Klarna">
+            <img src="https://via.placeholder.com/50" alt="PayPal">
+        </div>
+        <form>
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" placeholder="Enter your card number">
+
+            <label for="expiry-date">Expiration Date</label>
+            <input type="text" id="expiry-date" placeholder="MM/YY">
+
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" placeholder="Enter CVV">
+
+            <button class="button" type="submit">Submit Order</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>By submitting your order, you agree to the terms and conditions.</p>
+    </footer>
+</body>
+</html>
