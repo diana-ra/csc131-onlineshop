@@ -1,15 +1,15 @@
 CREATE TABLE Users (
-    email STRING PRIMARY KEY,
-    password STRING,
+    email TEXT PRIMARY KEY,
+    password TEXT,
     loginStatus BOOLEAN,
     registerDate DATE
 );
 
 CREATE TABLE Product (
     productID INTEGER PRIMARY KEY,
-    productName STRING,
+    productName TEXT,
     quantity INTEGER,
-    productSize STRING
+    productSize TEXT
 );
 
 CREATE TABLE ShoppingCart (
@@ -20,20 +20,20 @@ CREATE TABLE ShoppingCart (
 
 CREATE TABLE Payment (
     paymentID INTEGER PRIMARY KEY,
-    paymentMethod STRING,
-    cardNum STRING
+    paymentMethod TEXT,
+    cardNum TEXT
 );
 
 CREATE TABLE Customer (
-    customerName STRING PRIMARY KEY,
-    address STRING,
-    email STRING,
+    customerName TEXT PRIMARY KEY,
+    address TEXT,
+    email TEXT,
     accountBalance FLOAT,
     FOREIGN KEY (email) REFERENCES Users(email)
 );
 
 CREATE TABLE ShippingInfo (
     shippingID INTEGER PRIMARY KEY,
-    shippingType STRING,
+    shippingType TEXT,
     shippingCost INT
 );
