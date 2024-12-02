@@ -19,7 +19,7 @@
             background-color: #f9f9f9;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             border-bottom: 1px solid #ddd;
         }
 
@@ -28,6 +28,7 @@
             text-decoration: none;
             color: #333;
             font-weight: bold;
+           
         }
 
         /* Section Styling */
@@ -98,6 +99,7 @@
             position: absolute;
             right: 20px;
             top: 10px;
+            z-index: 1001;
         }
         .search-icon svg {
             width: 20px;
@@ -110,7 +112,7 @@
         }
 
         .search-modal {
-            display: none; /* Hidden by default */
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
@@ -191,6 +193,86 @@
             color: #333;
         }
 
+        .popup-overlay {
+        position: fixed;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 50px);
+        z-index: 900;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        }
+        .popup {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transform: scale(0.7);
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        }
+        .popup.show {
+        transform: scale(1);
+        opacity: 1;
+        }
+        .popup h2 {
+        margin-bottom: 15px;
+        }
+        .popup input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        }
+        .popup button {
+        padding: 10px;
+        background: #496d94;
+        color: white;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        }
+        .popup button:hover {
+        background: #0056b3;
+        }
+        
+        .signin-btn {
+        background: none; 
+        border: none; 
+        color: #333; 
+        font-weight: bold; 
+        cursor: pointer; 
+        font-size: 15px; 
+        text-decoration: none; 
+        padding: 0; 
+        font-family: Garamond, serif; 
+        }
+
+        .signin-btn:hover {
+            color: #555; 
+        }
+
+        .close-btn {
+        background: none;
+        border: none;
+        font-size: 20px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        }
+
+        #signupPopup .popup {
+        width: 600px; 
+        padding: 25px; 
+        height: auto; 
+        }
 
     </style>
 </head>
@@ -201,6 +283,34 @@
         <a href="#products">Products</a>
         <a href="#section3">About Us</a>
         <a href="#section4">Contact</a>
+        
+
+        <button class="signin-btn" onclick="openSigninPopup()">Sign In / Sign Up</button>
+
+        <div class="popup-overlay" id="signinPopup">
+            <div class="popup">
+                <button class="close-btn" onclick="closeSigninPopup()">×</button>
+                <h2>Sign In</h2>
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
+                <button>Log In</button>
+                <p>Don't have an account? <a href="#" onclick="openSignupPopup()">Sign Up</a></p>
+
+                <div class="popup-overlay" id="signupPopup">
+                    <div class="popup">
+                      <button class="close-btn" onclick="closeSignupPopup()">×</button>
+                      <h2>Sign Up</h2>
+                      <input type="email" placeholder="Email">
+                      <input type="password" placeholder="Password">
+                      <input type="password" placeholder="Confirm Password">
+                      <a href="user.html" class="signup-section">
+                        <button class="signup-btn">Sign Up</button>
+                      </a>
+                      <p>Already have an account? <a href="#" onclick="openSigninPopup()">Sign In</a></p>
+                    </div>
+
+            </div>
+        </div>
 
         <button class="search-icon" onclick ="openSearchModal()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -226,8 +336,8 @@
                 <div class="search-section">
                     <h3>Recent Searches</h3>
                     <div class="search-tags">
-                        <div class="tag">Zip Up Hoodies Men</div>
-                        <div class="tag">Zip Up Hoodies (Boys)</div>
+                        <div class="tag">White T-Shirt</div>
+                        <div class="tag">Denim Jacket</div>
                         <div class="tag">Clear All</div>
                     </div>
                 </div>
@@ -236,11 +346,8 @@
                 <div class="search-section">
                     <h3>Popular Searches</h3>
                     <div class="search-tags">
-                        <div class="tag">NFL</div>
-                        <div class="tag">Racing</div>
-                        <div class="tag">Camo</div>
-                        <div class="tag">Vests</div>
-                        <div class="tag">YPB Active</div>
+                        <div class="tag">Black Jogger</div>
+                        
                     </div>
                 </div>
     
@@ -252,7 +359,7 @@
                         <div class="tag">Track My Order</div>
                         <div class="tag">My Info</div>
                         <div class="tag">Purchase History</div>
-                        <div class="tag">Unsubscribe</div>
+
                     </div>
                 </div>
             </div>
@@ -268,6 +375,34 @@
             function closeSearchModal() {
                 document.getElementById('searchModal').style.display = 'none';
             }
+             // Function to open the Sign In/Sign Up popup
+            function openSigninPopup() {
+            const popup = document.getElementById('signinPopup');
+            popup.style.display = 'flex';
+            setTimeout(() => popup.querySelector('.popup').classList.add('show'), 50);
+            }
+
+            // Function to close the Sign In/Sign Up popup
+            function closeSigninPopup() {
+            const popup = document.getElementById('signinPopup');
+            popup.querySelector('.popup').classList.remove('show');
+            setTimeout(() => popup.style.display = 'none', 300);
+            }
+             // Function to open the Sign Up popup
+            function openSignupPopup() {
+                const popup = document.getElementById('signupPopup');
+                popup.style.display = 'flex';
+                popup.style.zIndex = '950';
+                setTimeout(() => popup.querySelector('.popup').classList.add('show'), 50);
+            }
+
+            // Function to close the Sign Up popup
+            function closeSignupPopup() {
+                const popup = document.getElementById('signupPopup');
+                popup.querySelector('.popup').classList.remove('show');
+                setTimeout(() => popup.style.display = 'none', 300);
+                popup.style.display = 'none';
+            } 
         </script>
 
     </div>
@@ -275,7 +410,6 @@
     <!-- Section 1 -->
     <section id="section1">
         <h2>Welcome to My Shop</h2>
-        
     </section>
 
    
@@ -283,7 +417,7 @@
     <section id="products">
         <h2>Our Products</h2>
         <!-- Product 1 -->
-        <a href="../../Downloads/CSC131/product.html" class="product-card">
+        <a href="product.html" class="product-card">
             <img src="products/DALL·E 2024-11-06 19.49.27 - A close-up of a casual white t-shirt hanging on a wooden hanger, simple design, short sleeves, displayed on a plain background. Isolated with no backg.jpg" alt="White T-Shirt">
             <div class="product-info">
                 <h3>White T-Shirt</h3>
@@ -291,16 +425,16 @@
             </div>
         </a>
         <!-- Product 2 -->
-        <a href="../../Downloads/CSC131/product.html" class="product-card">
-            <img src="C:\Users\nimal\OneDrive\TESTING\TESTING PROTO\products\DALL·E 2024-11-06 19.49.24 - A stylish dark blue denim jacket with silver buttons, folded sleeves, displayed on a plain background. Isolated with no background elements or accesso.jpg" alt="Denim Jacket">
+        <a href="product2.html" class="product-card">
+            <img src="products\DALL·E 2024-11-06 19.49.24 - A stylish dark blue denim jacket with silver buttons, folded sleeves, displayed on a plain background. Isolated with no background elements or accesso.jpg" alt="Denim Jacket">
             <div class="product-info">
                 <h3>Denim Jacket</h3>
                 <p>$50.00</p>
             </div>
         </a>
         <!-- Product 3 -->
-        <a href="../../Downloads/CSC131/product.html" class="product-card">
-            <img src="C:\Users\nimal\OneDrive\TESTING\TESTING PROTO\products\DALL·E 2024-11-06 19.49.04 - A pair of black athletic joggers with white side stripes, displayed neatly folded on a plain background. Isolated with no background elements or acces.jpg" alt="Black Joggers">
+        <a href="product3.html" class="product-card">
+            <img src="products\DALL·E 2024-11-06 19.49.04 - A pair of black athletic joggers with white side stripes, displayed neatly folded on a plain background. Isolated with no background elements or acces.jpg" alt="Black Joggers">
             <div class="product-info">
                 <h3>Black Joggers</h3>
                 <p>$40.00</p>
