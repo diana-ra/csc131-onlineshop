@@ -175,9 +175,9 @@ app.post('/api', (req, res) => {
 // LOOKS LIKE DELETE DOESNT PROPERLY WORK SINCE WE ARE GETTING MESSAGE FROM ELSE
 app.delete('/api', (req, res) => {
   res.set('content-type', 'application/json');
-  const sql = 'DELETE FROM users WHERE email=?';
+  const sql = 'DELETE FROM users WHERE id=?';
   try {
-    DB.run(sql, [req.query.email], function (err) {
+    DB.run(sql, [req.query.id], function (err) {
       if (err) throw err;
       if (this.changes === 1) {
         //one item deleted
