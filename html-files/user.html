@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+       
+        /* Basic Styles */
+        body {
+            font-family: Garamond, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            text-align: center;
+            padding: 10px;
+            background-color: #f9f9f9;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .navbar a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+           
+        }
+
+        /* Section Styling */
+        section {
+            padding: 40px 20px;
+            margin: 0 auto;
+            max-width: 800px;
+            background: #f4f4f4;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        section p {
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        .search-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+        }
+        .search-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #333;
+            transition: color 0.3s;
+        }
+        .search-icon:hover svg {
+            color: #555;
+        }
+
+        .search-modal {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .search-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            width: 70%;
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-modal-header h2 {
+            margin: 0;
+        }
+
+        .close-modal {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-section {
+            margin: 20px 0;
+        }
+
+        .search-section h3 {
+            margin-bottom: 10px;
+        }
+
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .tag:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+            /* Sidebar */
+        .sidebar {
+        width: 250px;
+        background-color: #f4f4f4;
+        height: 100vh;
+        padding: 20px;
+        border-right: 1px solid #ddd;
+        }
+
+        .sidebar h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        }
+
+        .sidebar ul li {
+        margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+        }
+
+        .sidebar ul li a:hover {
+        color: #007bff;
+        }
+
+
+        /* Content Area */
+        .content {
+            margin: 0 auto;
+            margin-bottom: 400px;
+            margin-top: -950px;
+            max-width: 500px; 
+            padding: 20px; 
+            background-color: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+            border: 1px solid #ddd; 
+        }
+
+        .content h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        }
+
+        .content form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+        margin-bottom: 20px;
+        }
+
+        .form-group label {
+        font-size: 12px;
+        color: #555;
+        display: block;
+        margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        }
+
+        .form-group select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        }
+
+        .form-group p {
+        font-size: 12px;
+        color: #999;
+        margin-top: 5px;
+        }
+
+        .edit-button {
+        text-decoration: none;
+        font-size: 12px;
+        color: #007bff;
+        cursor: pointer;
+        }
+
+        .edit-button:hover {
+        text-decoration: underline;
+        }
+
+        
+
+    </style>
+
+</head>
+<body>
+    <div class="navbar">
+        
+        <!-- Navigation -->
+    <div class="navbar">
+        <!-- Home link: Returns to the Home page (index.html) -->
+        <a href="home.html">Home</a>
+        
+        <!-- Men link: Navigates to the Men's Clothing page (men.html) -->
+        <a href="home.html">Products</a>
+        
+        <!-- Women link: Navigates to the Women's Clothing page (women.html) -->
+        <a href="home.html">About Us</a>
+        
+        <!-- Sale link: Placeholder for future functionality -->
+        <a href="#">Contact</a>
+        
+    </div>
+
+    <button class="search-icon" onclick ="openSearchModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </button>
+
+    <div class="search-modal" id="searchModal">
+        <div class="search-modal-content">
+            <!-- Modal Header -->
+            <div class="search-modal-header">
+                <h2>Search</h2>
+                <div class="close-modal" onclick="closeSearchModal()">&times;</div>
+            </div>
+
+            <!-- Search Input -->
+            <div class="search-box">
+                <input type="text" placeholder="Search">
+            </div>
+
+            <!-- Recent Searches -->
+            <div class="search-section">
+                <h3>Recent Searches</h3>
+                <div class="search-tags">
+                    <div class="tag">Zip Up Hoodies Men</div>
+                    <div class="tag">Zip Up Hoodies (Boys)</div>
+                    <div class="tag">Clear All</div>
+                </div>
+            </div>
+
+            <!-- Popular Searches -->
+            <div class="search-section">
+                <h3>Popular Searches</h3>
+                <div class="search-tags">
+                    <div class="tag">NFL</div>
+                    <div class="tag">Racing</div>
+                    <div class="tag">Camo</div>
+                    <div class="tag">Vests</div>
+                    <div class="tag">YPB Active</div>
+                </div>
+            </div>
+
+            <!-- Helpful Links -->
+            <div class="search-section">
+                <h3>Helpful Links</h3>
+                <div class="search-tags">
+                    <div class="tag">Online Returns</div>
+                    <div class="tag">Track My Order</div>
+                    <div class="tag">My Info</div>
+                    <div class="tag">Purchase History</div>
+                    <div class="tag">Unsubscribe</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to open the search modal
+        function openSearchModal() {
+            document.getElementById('searchModal').style.display = 'block';
+        }
+
+        // Function to close the search modal
+        function closeSearchModal() {
+            document.getElementById('searchModal').style.display = 'none';
+        }
+    </script>
+    <!-- Sidebar -->
+  <div class="sidebar">
+    <ul>
+      <li><a href="#">Purchase History</a></li>
+      <li><a href="#">Customer Service</a></li>
+      <li><a href="#">Account Settings</a></li>
+    </ul>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <h2>My Info</h2>
+    <form>
+      <!-- First Name -->
+      <div class="form-group">
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" value=" " >
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" value=" " >
+      </div>
+
+      <!-- Birthday -->
+      <div class="form-group">
+        <label>Birthday (Optional)</label>
+        <div style="display: flex; gap: 10px;">
+          <select>
+            <option> </option>
+            <!-- Add other months here -->
+          </select>
+          <select>
+            <option> </option>
+            <!-- Add other days here -->
+          </select>
+          <select>
+            <option> </option>
+            <!-- Add other years here -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" value=" " >
+        <a href="#" class="edit-button">Edit</a>
+        <p>Password must be 8-25 characters and contain numbers and letters.</p>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" value=" " >
+      </div>
+    </form>
+  </div>  
+
+    
+
+</body>
+</html>
