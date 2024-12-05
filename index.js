@@ -7,18 +7,21 @@ app.use(bodyParser.json());
 
 // Get Users Table
 app.get('/api', (req, res) => {
-  //get all enemies from the table
   res.set('content-type', 'application/json');
+  
+  //Sql statement that wil run in SqlLite
   const sql = 'SELECT * FROM users';
   let data = { users: [] };
   try {
+    //returns all rows in user table
     DB.all(sql, [], (err, rows) => {
       if (err) {
-        throw err; //let the catch handle it
+        throw err; 
       }
       rows.forEach((row) => {
         data.users.push({ email: row.email, password: row.password, loginStatus: row.loginStatus, registerDate: row.registerDate });
       });
+     //return user data in JSON 
       let content = JSON.stringify(data);
       res.send(content);
     });
@@ -31,14 +34,13 @@ app.get('/api', (req, res) => {
 
 // Get Product Table
 app.get('/api/product', (req, res) => {
-  //get all enemies from the table
   res.set('content-type', 'application/json');
   const sql = 'SELECT * FROM product';
   let data = { users: [] };
   try {
     DB.all(sql, [], (err, rows) => {
       if (err) {
-        throw err; //let the catch handle it
+        throw err;
       }
       rows.forEach((row) => {
         data.users.push({ productID: row.productID, productName: row.productName, quantity: row.quantity, productSize: row.productSize, price: row.price });
@@ -55,14 +57,13 @@ app.get('/api/product', (req, res) => {
 
 // Get Payment Table
 app.get('/api/payment', (req, res) => {
-  //get all enemies from the table
   res.set('content-type', 'application/json');
   const sql = 'SELECT * FROM payment';
   let data = { users: [] };
   try {
     DB.all(sql, [], (err, rows) => {
       if (err) {
-        throw err; //let the catch handle it
+        throw err; 
       }
       rows.forEach((row) => {
         data.users.push({ paymentID: row.paymentID, paymentMethod: row.paymentMethod, cardNum: row.cardNum });
@@ -79,14 +80,13 @@ app.get('/api/payment', (req, res) => {
 
 // Get Customer Table
 app.get('/api/customer', (req, res) => {
-  //get all enemies from the table
   res.set('content-type', 'application/json');
   const sql = 'SELECT * FROM customer';
   let data = { users: [] };
   try {
     DB.all(sql, [], (err, rows) => {
       if (err) {
-        throw err; //let the catch handle it
+        throw err; 
       }
       rows.forEach((row) => {
         data.users.push({ customerName: row.customerName, address: row.address, email: row.email, accountBalance: row.accountBalance });
@@ -103,14 +103,13 @@ app.get('/api/customer', (req, res) => {
 
 // Get Shipping Info Table
 app.get('/api/shippinginfo', (req, res) => {
-  //get all enemies from the table
   res.set('content-type', 'application/json');
   const sql = 'SELECT * FROM shippingInfo';
   let data = { users: [] };
   try {
     DB.all(sql, [], (err, rows) => {
       if (err) {
-        throw err; //let the catch handle it
+        throw err; 
       }
       rows.forEach((row) => {
         data.users.push({ shippingID: row.shippingID, shippingType: row.shippingType, shippingCost: row.shippingCost });
@@ -127,14 +126,13 @@ app.get('/api/shippinginfo', (req, res) => {
 
 // Get Shopping Cart Table
 app.get('/api/shoppingcart', (req, res) => {
-  //get all enemies from the table
   res.set('content-type', 'application/json');
   const sql = 'SELECT * FROM shoppingCart';
   let data = { users: [] };
   try {
     DB.all(sql, [], (err, rows) => {
       if (err) {
-        throw err; //let the catch handle it
+        throw err; 
       }
       rows.forEach((row) => {
         data.users.push({ cartID: row.cartID, productID: row.productID });
@@ -154,12 +152,13 @@ app.post('/api', (req, res) => {
   console.log(req.body);
 
   res.set('content-type', 'application/json');
+  //Runs sql statement in sqlLite each "?" is a value that is required to fill the user table with 
   const sql = 'INSERT INTO users(email, password, loginStatus, registerDate) VALUES (? , ? , ? , ?)';
   let newId;
   try {
     DB.run(sql, [req.body.email, req.body.password, req.body.loginStatus, req.body.registerDate], function (err) {
       if (err) throw err;
-      newId = this.lastID; //provides the auto increment integer enemy_id
+      newId = this.lastID; 
       res.status(201);
       let data = { status: 201, message: `User ${newId} saved.` };
       let content = JSON.stringify(data);
@@ -172,9 +171,10 @@ app.post('/api', (req, res) => {
   }
 });
 
-// LOOKS LIKE DELETE DOESNT PROPERLY WORK SINCE WE ARE GETTING MESSAGE FROM ELSE
+// Delete a User
 app.delete('/api', (req, res) => {
   res.set('content-type', 'application/json');
+  //gets the id number from the endpoint ex. /api?id=3 while get the 3rd id in user table and be deleted
   const sql = 'DELETE FROM users WHERE id=?';
   try {
     DB.run(sql, [req.query.id], function (err) {
@@ -196,6 +196,7 @@ app.delete('/api', (req, res) => {
   }
 });
 
+//port number listening on
 app.listen(3000, (err) => {
   if (err) {
     console.log('ERROR:', err.message);
